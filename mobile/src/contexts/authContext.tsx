@@ -45,7 +45,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const signIn = async (email: string, password: string) => {
     try {
       const { data } = await api.post('/sessions', { email, password });
-      console.log(data);
       if (data.user && data.token) {
         setIsLoadingUserStorage(true);
 
