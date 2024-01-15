@@ -42,7 +42,7 @@ export function Profile() {
   const [userPhoto, setUserPhoto] = useState('https://preview.redd.it/bdmydwuof6u91.jpg?width=640&crop=smart&auto=webp&s=2fed437a6bb7c0fc33d77e51b34b13a51f47c395');
 
   const toast = useToast();
-  const { user } = useAuth();
+  const { user, updateUserProfile } = useAuth();
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     defaultValues: {
       name: user.name,
@@ -88,7 +88,12 @@ export function Profile() {
     try {
       setIsUpdating(true);
 
+      const userUpdated = user;
+      userUpdated.name = formData.name;
+
       await api.put('/users', formData);
+
+      await updateUserProfile(userUpdated);
 
       toast.show({
         title: 'Perfil atualizado com sucesso!',
