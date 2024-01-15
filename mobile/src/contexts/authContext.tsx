@@ -44,6 +44,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const signIn = async (email: string, password: string) => {
     try {
       const { data } = await api.post('/sessions', { email, password });
+      console.log(data);
       if (data.user && data.token) {
         setIsLoadingUserStorage(true);
 
@@ -52,6 +53,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         userAndTokenUpdate(data.user, data.token);
       }
     } catch (error) {
+      console.log(error);
       throw error;
     } finally {
       setIsLoadingUserStorage(false);
